@@ -21,7 +21,8 @@ function fixPackages(packages) {
 
   while (result.indexOf('(') !== -1) {
     indexOp = result.lastIndexOf('(') + 1;
-    indexEnd = result.indexOf(')') < indexOp ? result.indexOf(')', indexOp) : result.indexOf(')');
+    indexEnd = result.indexOf(')');
+    indexEnd = indexEnd < indexOp ? result.indexOf(')', indexOp) : indexEnd;
 
     substr = result.substring(indexOp, indexEnd);
     result = result.replace('('+substr+')', substr.split('').reverse().join(''));
