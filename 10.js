@@ -35,9 +35,7 @@ function compile(instructions) {
         regs[instrArray[1]] = (regs[instrArray[1]] || 0) - 1;
         break;
       case 'JMP':
-        if (regs[instrArray[1]] === 0 || regs[instrArray[1]] === undefined) {
-          i = Number(instrArray[2]) - 1;
-        }
+        i = regs[instrArray[1]] === 0 || regs[instrArray[1]] === undefined ? Number(instrArray[2]) - 1 : i;
         break;
       case 'MOV':
         regs[instrArray[2]] = isNaN(Number(instrArray[1])) ? regs[instrArray[1]] : Number(instrArray[1]);
