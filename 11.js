@@ -23,7 +23,6 @@ function decodeFilename(filename) {
   return parts[0]+'.'+parts[1];
 }
 
-
 function doTest(filename, expected) {
   const actual = decodeFilename(filename);
   if (actual !== expected) {

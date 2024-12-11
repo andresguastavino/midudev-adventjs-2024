@@ -47,7 +47,6 @@ function compile(instructions) {
   return regs['A'];
 }
 
-
 function doTest(instructions, expected) {
   const actual = compile(instructions);
   if (actual !== expected) {
