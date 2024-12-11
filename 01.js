@@ -1,3 +1,5 @@
+const test = require('./test.js');
+
 /**
  * Santa Claus 🎅 has received a list of magical numbers representing gifts 🎁, but some of them are duplicated and must 
  * be removed to avoid confusion. Additionally, the gifts must be sorted in ascending order before being delivered to the 
@@ -12,15 +14,12 @@ function prepareGifts(gifts) {
     .sort((a, b) => a - b)
 }
 
-const gifts1 = [3, 1, 2, 3, 4, 2, 5]
-const preparedGifts1 = prepareGifts(gifts1)
-console.log(preparedGifts1) // [1, 2, 3, 4, 5]
+function prepareGiftsInvoker(params) {
+  return prepareGifts(params.gifts)
+}
 
-const gifts2 = [6, 5, 5, 5, 5]
-const preparedGifts2 = prepareGifts(gifts2)
-console.log(preparedGifts2) // [5, 6]
+const { doTest } = test;
 
-const gifts3 = []
-const preparedGifts3 = prepareGifts(gifts3)
-console.log(preparedGifts3) // []
-// There are no gifts, the list remains empty
+doTest(prepareGiftsInvoker, { gifts: [3, 1, 2, 3, 4, 2, 5] }, [1, 2, 3, 4, 5]);
+doTest(prepareGiftsInvoker, { gifts: [6, 5, 5, 5, 5] }, [5, 6]);
+doTest(prepareGiftsInvoker, { gifts: [] }, []);
