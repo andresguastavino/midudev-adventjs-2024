@@ -23,15 +23,13 @@ function decodeFilename(filename) {
   return parts[0]+'.'+parts[1];
 }
 
-function doTest(filename, expected) {
-  const actual = decodeFilename(filename);
-  if (actual !== expected) {
-    console.log('Actual doesn\'t equal expected. Expected: ',expected,'. Actual: ',actual)
-  }
+function decodeFilenameInvoker(params) {
+  return decodeFilename(params.filename);
 }
 
-doTest('2023122512345678_sleighDesign.png.grinchwa', 'sleighDesign.png');
+const test = require('./test.js');
+const { doTest } = test;
 
-doTest('42_chimney_dimensions.pdf.hack2023.png.grinchwa', 'chimney_dimensions.pdf');
-
-doTest('987654321_elf-roster.csv.tempfile', 'elf-roster.csv');
+doTest(decodeFilenameInvoker, { filename: '2023122512345678_sleighDesign.png.grinchwa'}, 'sleighDesign.png');
+doTest(decodeFilenameInvoker, { filename: '42_chimney_dimensions.pdf.hack2023.png.grinchwa'}, 'chimney_dimensions.pdf');
+doTest(decodeFilenameInvoker, { filename: '987654321_elf-roster.csv.tempfile'}, 'elf-roster.csv');

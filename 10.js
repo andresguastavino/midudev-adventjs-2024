@@ -47,43 +47,14 @@ function compile(instructions) {
   return regs['A'];
 }
 
-function doTest(instructions, expected) {
-  const actual = compile(instructions);
-  if (actual !== expected) {
-    console.log('Actual doesn\'t equal expected. Expected: ',expected,'. Actual: ',actual)
-  }
+function compileInvoker(params) {
+  return compile(params.instructions);
 }
 
-doTest([
-  'MOV 0 A',
-  'JMP A 0'
-], 0);
+const test = require('./test.js');
+const { doTest } = test;
 
-doTest([
-  'DEC A' // increments the value of register 'A'
-], -1);
-
-doTest([
-  'MOV -1 C', // copies -1 to register 'C',
-  'INC C', // increments the value of register 'C'
-  'JMP C 1', // jumps to the instruction at index 1 if 'C' is 0
-  'MOV C A', // copies register 'C' to register 'A',
-  'INC A' // increments the value of register 'A'
-], 2);
-
-doTest([
-  "MOV 2 X",
-  "DEC X",
-  "DEC X",
-  "JMP X 1",
-  "MOV X A"
-], -2);
-
-doTest([
-  "MOV 3 C",
-  "DEC C",
-  "DEC C",
-  "DEC C",
-  "JMP C 3",
-  "MOV C A"
-], -1);
+doTest(compileInvoker, { instructions: [ "MOV 0 A", "INC A" ] }, 1);
+doTest(compileInvoker, { instructions: [ "DEC A" ] }, -1);
+doTest(compileInvoker, { instructions: [ "MOV -1 C", "INC C", "JMP C 1", "MOV C A", "INC A" ] }, 2);
+doTest(compileInvoker, { instructions: [ "MOV 3 C", "DEC C", "DEC C", "DEC C", "JMP C 3", "MOV C A" ] }, -1);

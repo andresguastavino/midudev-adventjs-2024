@@ -47,60 +47,18 @@ function moveTrain(board, mov) {
   return crash ? 'crash' : fruit ? 'eat' : 'none';
 }
 
-const board = ['·····', '*····', '@····', 'o····', 'o····']
+function moveTrainInvoker(params) {
+  return moveTrain(params.board, params.mov);
+}
 
-console.log(moveTrain(board, 'U'))
-// ➞ 'eat'
-// Because the train moves up and finds a magical fruit
+const test = require('./test.js');
+const { doTest } = test;
 
-console.log(moveTrain(board, 'D'))
-// ➞ 'crash'
-// The train moves down and the head crashes into itself
-
-console.log(moveTrain(board, 'L'))
-// ➞ 'crash'
-// The train moves to the left and crashes into the wall
-
-console.log(moveTrain(board, 'R'))
-// ➞ 'none'
-// The train moves to the right and there is empty space on the right
-
-console.log(moveTrain([
-  "·····",
-  "··*··",
-  "··.··",
-  "··o··",
-  "··@··"
-], 'D'))
-// ➞ 'crash'
-// The train moves to the right and there is empty space on the right
-
-console.log(moveTrain([
-  "·····",
-  "··*··",
-  "··@··",
-  "··o··",
-  "··o··"
-], 'D'))
-// ➞ 'crash'
-// The train moves to the right and there is empty space on the right
-
-console.log(moveTrain([
-  "··@··",
-  "··o··",
-  "·*o··",
-  "··o··",
-  "··o··"
-], 'U'))
-// ➞ 'crash'
-// The train moves to the right and there is empty space on the right
-
-console.log(moveTrain([
-  "·····",
-  "··@··",
-  "··*··",
-  "·····",
-  "·····"
-], 'D'))
-// ➞ 'eat'
-// The train moves to the right and there is empty space on the right
+doTest(moveTrainInvoker, { board: ['·····', '*····', '@····', 'o····', 'o····'], mov: 'U' }, 'eat');
+doTest(moveTrainInvoker, { board: ['·····', '*····', '@····', 'o····', 'o····'], mov: 'D' }, 'crash');
+doTest(moveTrainInvoker, { board: ['·····', '*····', '@····', 'o····', 'o····'], mov: 'L' }, 'crash');
+doTest(moveTrainInvoker, { board: ['·····', '*····', '@····', 'o····', 'o····'], mov: 'R' }, 'none');
+doTest(moveTrainInvoker, { board: ["·····","··*··","··.··","··o··","··@··"], mov: 'D' }, 'crash');
+doTest(moveTrainInvoker, { board: ["·····","··*··","··@··","··o··","··o··"], mov: 'D' }, 'crash');
+doTest(moveTrainInvoker, { board: ["··@··","··o··","·*o··","··o··","··o··"], mov: 'U' }, 'crash');
+doTest(moveTrainInvoker, { board: ["·····","··@··","··*··","·····","·····"], mov: 'D' }, 'eat');
