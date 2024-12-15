@@ -21,33 +21,16 @@
  * @returns {number}
  */
 function minMovesToStables(reindeer, stables) {
-  let cost = 0;
-  let minCost = 0;
-  let indexOfMinCost = 0;
-  
-  let sum = 0;
+  let a, b;
+  let i = 0, sum = 0, count = reindeer.length;
 
-  let i = 0;
-  let j = 0;
-  while (i < reindeer.length) {
-    j = 0;
-    minCost = Math.max(...stables);
+  while (i < count) {
+    a = reindeer.splice(reindeer.indexOf(Math.min(...reindeer)), 1)[0];
+    b = stables.splice(stables.indexOf(Math.min(...stables)), 1)[0];
 
-    while (j < stables.length) {
-      cost = Math.abs(reindeer[i] - stables[j]);
-      
-      if (cost < minCost) {
-        minCost = cost;
-        indexOfMinCost = j;
-      }
+    sum += Math.abs(a - b);
 
-      j++;
-    }
-
-    stables.splice(indexOfMinCost, 1);
-    sum += minCost;
-
-    i++;
+    i++;   
   }
 
   return sum;
